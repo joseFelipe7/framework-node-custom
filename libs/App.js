@@ -8,7 +8,7 @@ class App {
         this.router = new Router
         this.viewPath = path.join('app', 'views')
         this.server = http.createServer(async (req, res) => {
-           
+        
             req = await request(req)
             res = await response(res, this.viewPath)
             
@@ -23,6 +23,9 @@ class App {
     }
     viewFolder(folderPath){
       this.viewPath = folderPath
+    }
+    publicFolder(publicPath){
+      this.router.publicFolder = publicPath
     }
     #mergeRoutes(obj1, obj2) {
         const merged = {};
@@ -46,28 +49,5 @@ class App {
     }
     
 }
+
 module.exports = { App, Router }
-// start  -
-// view
-// json  
-// router()  -
-// res.json()  
-// res.view()
-
-// Define your routes and their respective handlers
-//router.get('/', (req,res)=>{res.end('hello')})
-//routes.define()
-//lib de rotas permitir definir rotas novas de maneira simplificada
-//ter uma função para infentificar a rota chamada e o method
-//verificar se ah parametro e permitir ele ser usado faciç
-//ser facil de usar
-
-
-// console.log()
-// const server = http.createServer((req, res) => {
-//   routes.use(req, res)
-// });
-
-// server.listen(port, hostname, () => {
-//   console.log(`Server running at http://${hostname}:${port}/`);
-// });

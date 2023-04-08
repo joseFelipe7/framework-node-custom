@@ -16,16 +16,22 @@ async function index (res, viewPath){
     return res
 }
 function view(viewPath, viewFile,res){
-    console.log(path.join(viewPath,viewFile))
-    fs.readFile(path.join(viewPath,viewFile), function(err, page) {
-        if (err) {
-          res.write('ocorreu um erro ao tentar ler sua view');
-          res.end();
-          return ;
+    fs.exists(path.join(viewPath,viewFile), (exists) => {
+        if (exists) {
+            fs.readFile(path.join(viewPath,viewFile), function(err, page) {
+                if (err) {
+                res.write('ocorreu um erro ao tentar ler sua view');
+                res.end();
+                return ;
+                }
+                res.writeHead(200, {'Content-Type': 'text/html'});
+                res.write(page);
+                res.end();
+            });
+        } else {
+            res.writeHead(404, { 'Content-Type': 'text/plain' });
+            res.end('view nao encontrada');
         }
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write(page);
-        res.end();
     });
 }
 function json(obj, res){

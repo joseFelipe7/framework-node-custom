@@ -6,12 +6,7 @@ const fs = require('fs')
 
 
 router.get('/', (req, res) => {
-  // console.log(req)
-  // res.writeHead(200, { 'Content-Type': 'text/plain' });
-  // res.end('Hello World!');
-  let view = 'index.html'
-  
-  res.view(view)
+  res.view('indexs.html')
   //res.status(201).json({obj:'meu amigo'})
 })
 router.post('/', (req, res) => {
