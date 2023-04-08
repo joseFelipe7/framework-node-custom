@@ -1,14 +1,10 @@
 const { Router } = require('../libs/App')
 const router = new Router()
-const fs = require('fs')
+const testController = require('../app/controllers/testController')
 
 
 
-
-router.get('/', (req, res) => {
-  res.view('indexs.html')
-  //res.status(201).json({obj:'meu amigo'})
-})
+router.get('/', testController.index)
 router.post('/', (req, res) => {
   
   res.writeHead(200, { 'Content-Type': 'text/plain' });

@@ -8,7 +8,7 @@ const port = 3000;
 const routes = require('./routes')
 
 app = new App()
-app.viewFolder(path.join('app', 'views_ui'))
-app.publicFolder(path.join('public'))
-app.useRoute(routes)
+app.viewFolder(path.join('app', 'views'))
+app.publicFolder(path.join('public')) 
+app.useRoute(routes) 
 app.start(host, port)

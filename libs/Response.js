@@ -9,30 +9,51 @@ async function index (res, viewPath){
         json(obj, res)
         return res
     }
-    res.view = (viewFile)=>{
-        view(viewPath, viewFile, res)
+    res.view = (viewFile, data = {})=>{
+        let output = view(viewPath, viewFile, data, res)
+        res.write(output);
+        res.end();
         return res
     }
     return res
 }
-function view(viewPath, viewFile,res){
-    fs.exists(path.join(viewPath,viewFile), (exists) => {
+function view(viewPath, viewFile, data, res){
+    let exists = fs.existsSync(path.join(viewPath,viewFile))
         if (exists) {
-            fs.readFile(path.join(viewPath,viewFile), function(err, page) {
-                if (err) {
-                res.write('ocorreu um erro ao tentar ler sua view');
-                res.end();
-                return ;
-                }
+            try {
+                let page = fs.readFileSync(path.join(viewPath,viewFile), 'utf8')
                 res.writeHead(200, {'Content-Type': 'text/html'});
-                res.write(page);
-                res.end();
-            });
-        } else {
-            res.writeHead(404, { 'Content-Type': 'text/plain' });
-            res.end('view nao encontrada');
-        }
-    });
+
+                const matches = page.match(/{{.+?}}/g);
+                if(matches){
+                    matches.forEach((item, index)=>{
+                        let key = item.slice(2, -2).trim()
+                        let regex = /\((.*?)\)/;
+                        let match = regex.exec(key);
+
+                        if (match) {
+                            let [callback, paramPage] = key.slice(0, -1).split('(')
+                            if(callback == 'include'){
+                                const indexStart = page.indexOf(matches[index]);
+                                page = page.substring(0, indexStart) + view(viewPath, paramPage, res) + page.substring(indexStart + matches[index].length); 
+                            }
+                        } 
+                    })
+                }
+            
+                let output = page;
+                for (const key in data) {
+                    output = output.replace(new RegExp(`{{\\s*${key}\\s*}}`, 'g'), data[key]);
+                }
+                
+                return output
+            } catch (error) {
+                return 'ocorreu um erro ao tentar ler sua view';
+            }
+    } else {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        throw new Error('view nao encontrada')
+    }
 }
 function json(obj, res){
     res.setHeader('Content-Type', 'application/json');
