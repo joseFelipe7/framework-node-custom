@@ -3,6 +3,8 @@ async function index (req){
     return req
 }
 async function getBody(req){
+    if(!req.headers['content-type']) return {}
+
     if(req.headers['content-type'].startsWith('multipart/form-data')) return await bodyFormData(req);
     
     if(req.headers['content-type'].startsWith('application/json')) return await bodyJson(req)
@@ -21,7 +23,7 @@ async function bodyJson(req){
         }
     });
         
-    return JSON.parse(body)
+    return JSON.parse(data)
 }
 async function bodyFormData(req){
     let data = {};

@@ -1,22 +1,24 @@
-const Router = require('../libs/Router')
+const { Router } = require('../libs/App')
 const router = new Router()
-
+const fs = require('fs')
 
 
 
 
 router.get('/', (req, res) => {
-  console.log(req)
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Hello World!');
+  // console.log(req)
+  // res.writeHead(200, { 'Content-Type': 'text/plain' });
+  // res.end('Hello World!');
+  let view = 'index.html'
+  
+  res.view(view)
+  //res.status(201).json({obj:'meu amigo'})
 })
 router.post('/', (req, res) => {
-
-  console.log(req.body)
+  
   res.writeHead(200, { 'Content-Type': 'text/plain' });
   res.end('Hello World!');
 
-  
 })
 module.exports = router
 

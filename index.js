@@ -1,4 +1,5 @@
 const http = require('http');
+const path = require('path');
 const { App } = require('./libs/App')
 const host = '127.0.0.1';
 const port = 3000;
@@ -19,6 +20,7 @@ const routes2 = require('./routes/indexCopy')
 console.log()
 
 app = new App()
+app.viewFolder(path.join('app', 'views_ui'))
 app.useRoute(routes)
 app.useRoute(routes2)
 app.start(host, port)

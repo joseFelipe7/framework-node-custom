@@ -1,13 +1,17 @@
 const http = require('http');
+const path = require('path');
 const Router = require('./Router')
 const request = require('./Request')
 const response = require('./Response')
-
 class App {
     constructor() { 
         this.router = new Router
+        this.viewPath = path.join('app', 'views')
         this.server = http.createServer(async (req, res) => {
+           
             req = await request(req)
+            res = await response(res, this.viewPath)
+            
             this.router.use(req, res)
         });
     }
@@ -17,7 +21,9 @@ class App {
     useRoute(router){
         this.router.routes = this.#mergeRoutes(this.router.routes, router.routes)
     }
-
+    viewFolder(folderPath){
+      this.viewPath = folderPath
+    }
     #mergeRoutes(obj1, obj2) {
         const merged = {};
         for (let key in obj1) {
@@ -41,11 +47,11 @@ class App {
     
 }
 module.exports = { App, Router }
-// start
+// start  -
 // view
-// json
-// router()
-// res.json()
+// json  
+// router()  -
+// res.json()  
 // res.view()
 
 // Define your routes and their respective handlers
