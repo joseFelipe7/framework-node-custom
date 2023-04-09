@@ -4,6 +4,12 @@ const homeController = require('../app/controllers/homeController')
 const base = '/'
 
 router.get(`${base}`, homeController.index)
+    
+    router.post(`${base}json`, (req,res)=>{ 
+      console.log(req.body)
+     return res.json(req.body)
+    })
+router.post(`${base}`, homeController.login)
 router.get(`${base}ss`, homeController.indexss)
 
 module.exports = router

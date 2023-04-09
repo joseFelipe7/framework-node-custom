@@ -1,3 +1,4 @@
+
 async function index (req){
     req.body = await getBody(req)
     return req
@@ -6,23 +7,22 @@ async function getBody(req){
     if(!req.headers['content-type']) return {}
 
     if(req.headers['content-type'].startsWith('multipart/form-data')) return await bodyFormData(req);
+
+    if(req.headers['content-type'].startsWith('application/x-www-form-urlencoded')) return await bodyAplicationFormData(req);
     
     if(req.headers['content-type'].startsWith('application/json')) return await bodyJson(req)
 }
 async function bodyJson(req){
     let data = [];
-    await req.on('data', (chunk) => {
-        data.push(chunk);
-    })
-    
-    await req.on('end', async() => {
-        try { 
-            data = await JSON.parse(data) 
-        }catch (error) { 
-            console.log('formato nao suportado')  
-        }
+    await new Promise((resolve, reject) => {
+        req.on('data', (chunk) => {
+            data.push(chunk);
+        })
+        req.on('end', () => {
+            resolve();
+        });
     });
-        
+    
     return JSON.parse(data)
 }
 async function bodyFormData(req){
@@ -64,6 +64,28 @@ async function bodyFormData(req){
             }
         }
     }));
+
+    return data;
+}
+async function bodyAplicationFormData(req){
+    const data = {};
+    let chunks = '';
+    
+    await new Promise((resolve, reject) => {
+        req.on('data', chunk => {
+            chunks+=chunk;
+        });
+        
+        req.on('end', () => {
+            resolve();
+        });
+    });
+
+    const keyValuePairs = chunks.split('&');
+    for (let i = 0; i < keyValuePairs.length; i++) {
+        const [key, value] = keyValuePairs[i].split('=');
+        data[key] = decodeURIComponent(value);
+    }
 
     return data;
 }

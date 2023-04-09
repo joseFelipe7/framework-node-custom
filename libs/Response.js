@@ -6,12 +6,19 @@ async function index (res, viewPath){
         return res
     }
     res.json = (obj)=>{
+
         json(obj, res)
         return res
     }
     res.view = (viewFile, data = {})=>{
         let output = view(viewPath, viewFile, data, res)
+        res.writeHead(200, {'Content-Type': 'text/html'});
         res.write(output);
+        res.end();
+        return res
+    }
+    res.redirect = (routePath)=>{
+        redirect(routePath, res)
         res.end();
         return res
     }
@@ -22,7 +29,6 @@ function view(viewPath, viewFile, data, res){
         if (exists) {
             try {
                 let page = fs.readFileSync(path.join(viewPath,viewFile), 'utf8')
-                res.writeHead(200, {'Content-Type': 'text/html'});
 
                 const matches = page.match(/{{.+?}}/g);
                 if(matches){
@@ -58,5 +64,8 @@ function view(viewPath, viewFile, data, res){
 function json(obj, res){
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(obj));
+}
+function redirect(routePath, res){
+    res.writeHead(301, {'Location': routePath});
 }
 module.exports = index

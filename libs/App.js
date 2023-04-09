@@ -5,6 +5,7 @@ const Router = require('./Router')
 const request = require('./Request')
 const response = require('./Response')
 const Database = require('./Database')
+const Hashing = require('./Hashing')
 
 class App {
     constructor() { 
@@ -12,7 +13,7 @@ class App {
         this.viewPath = path.join('app', 'views')
         this.sessions = {};
         this.server = http.createServer(async (req, res) => {
-          this.startSession(req,res)
+          await this.#startSession(req,res)
           
           req = await request(req)
           res = await response(res, this.viewPath)
@@ -24,7 +25,16 @@ class App {
     start(hostname = '127.0.0.1', port = 3000){
         this.server.listen(port, hostname, () => {  console.log(`Server running at http://${hostname}:${port}/`); });
     }
-    startSession(req,res){
+    useRoute(router){
+        this.router.routes = this.#mergeRoutes(this.router.routes, router.routes)
+    }
+    viewFolder(folderPath){
+      this.viewPath = folderPath
+    }
+    publicFolder(publicPath){
+      this.router.publicFolder = publicPath
+    }
+    #startSession(req,res){
 
       let sessionId;
       // Verifica se o cookie 'sessionId' já existe na requisição
@@ -40,20 +50,13 @@ class App {
       if (!sessionId || !this.sessions[sessionId]) {
         sessionId = new Date().getTime().toString();
         this.sessions[sessionId] = {};
+        //registro a sessão no cookie do header
+        res.setHeader('Set-Cookie', `sessionId=${sessionId}`);
       }
        
       //atribuo o objeto de sessão a req.session e defino o header com a sessão do usuario
       req.session = this.sessions[sessionId]
-      res.setHeader('Set-Cookie', `sessionId=${sessionId}`);
-    }
-    useRoute(router){
-        this.router.routes = this.#mergeRoutes(this.router.routes, router.routes)
-    }
-    viewFolder(folderPath){
-      this.viewPath = folderPath
-    }
-    publicFolder(publicPath){
-      this.router.publicFolder = publicPath
+      
     }
     #mergeRoutes(obj1, obj2) {
         const merged = {};
@@ -78,4 +81,4 @@ class App {
     
 }
 
-module.exports = { App, Router, Database  }
+module.exports = { App, Router, Database, Hashing }

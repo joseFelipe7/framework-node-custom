@@ -3,5 +3,5 @@ module.exports = {
     port     : '3306',
     user     : 'root',
     password : '',
-    database : 'laravel_crud'
+    database : 'framework_prize_draw'
 }

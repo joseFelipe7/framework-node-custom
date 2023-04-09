@@ -1,7 +1,31 @@
 .gradient-custom {
-    background: #fccb90;
-    background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+    background: #FF3F40;
+    background: linear-gradient(to right, #FF3F40, #FF3F6D);
+}
+.bg-primary-custom{
+    background-color: #FF3F40;
+}
+.bg-secundary-custom{
+    background-color: #57DED7;
 }
 .btn-custom {
     border: none;
+    transition: 0.3s;
+    box-sizing: border-box!important;
+    
+}
+.btn-custom.gradient-custom:hover {
+    background: linear-gradient(to right, #FF3F6D, #FF3F90)
+}
+
+.btn-custom.bg-secundary-custom{
+    color:#FFF;
+    box-sizing: border-box;
+}
+.btn-custom.bg-secundary-custom:hover{
+    color:#57DED7;
+    background: #FFF;
+    border: #57DED7 solid 1px;
+    box-sizing: border-box;
+
 }
