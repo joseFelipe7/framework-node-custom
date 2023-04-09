@@ -1,16 +1,11 @@
 const { Router } = require('../libs/App')
 const router = new Router()
-const testController = require('../app/controllers/exampleController')
+const homeController = require('../app/controllers/homeController')
+const base = '/'
 
+router.get(`${base}`, homeController.index)
+router.get(`${base}ss`, homeController.indexss)
 
-
-// router.get('/', testController.index)
-// router.post('/', (req, res) => {
-  
-//   res.writeHead(200, { 'Content-Type': 'text/plain' });
-//   res.end('Hello World!');
-
-// })
 module.exports = router
 
 

@@ -1,5 +1,6 @@
 const http = require('http');
 const path = require('path');
+
 const Router = require('./Router')
 const request = require('./Request')
 const response = require('./Response')
@@ -9,18 +10,41 @@ class App {
     constructor() { 
         this.router = new Router
         this.viewPath = path.join('app', 'views')
-
+        this.sessions = {};
         this.server = http.createServer(async (req, res) => {
-        
-            req = await request(req)
-            res = await response(res, this.viewPath)
-            
-            this.router.use(req, res)
+          this.startSession(req,res)
+          
+          req = await request(req)
+          res = await response(res, this.viewPath)
+          
+          this.router.use(req, res)
         });
         
     }
     start(hostname = '127.0.0.1', port = 3000){
         this.server.listen(port, hostname, () => {  console.log(`Server running at http://${hostname}:${port}/`); });
+    }
+    startSession(req,res){
+
+      let sessionId;
+      // Verifica se o cookie 'sessionId' já existe na requisição
+      if (req.headers.cookie) {
+        const cookies = req.headers.cookie.split('; ');
+        cookies.forEach(cookie => {
+          if (cookie.startsWith('sessionId=')) {
+            sessionId = cookie.split('=')[1];
+          }
+        });
+      }
+      // Se o ID da sessão não existir ou não for válido, cria um novo com base na data atual
+      if (!sessionId || !this.sessions[sessionId]) {
+        sessionId = new Date().getTime().toString();
+        this.sessions[sessionId] = {};
+      }
+       
+      //atribuo o objeto de sessão a req.session e defino o header com a sessão do usuario
+      req.session = this.sessions[sessionId]
+      res.setHeader('Set-Cookie', `sessionId=${sessionId}`);
     }
     useRoute(router){
         this.router.routes = this.#mergeRoutes(this.router.routes, router.routes)
