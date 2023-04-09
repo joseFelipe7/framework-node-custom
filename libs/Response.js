@@ -35,7 +35,7 @@ function view(viewPath, viewFile, data, res){
                             let [callback, paramPage] = key.slice(0, -1).split('(')
                             if(callback == 'include'){
                                 const indexStart = page.indexOf(matches[index]);
-                                page = page.substring(0, indexStart) + view(viewPath, paramPage, res) + page.substring(indexStart + matches[index].length); 
+                                page = page.substring(0, indexStart) + view(viewPath, paramPage, data, res) + page.substring(indexStart + matches[index].length); 
                             }
                         } 
                     })

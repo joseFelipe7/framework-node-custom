@@ -3,10 +3,13 @@ const path = require('path');
 const Router = require('./Router')
 const request = require('./Request')
 const response = require('./Response')
+const Database = require('./Database')
+
 class App {
     constructor() { 
         this.router = new Router
         this.viewPath = path.join('app', 'views')
+
         this.server = http.createServer(async (req, res) => {
         
             req = await request(req)
@@ -14,6 +17,7 @@ class App {
             
             this.router.use(req, res)
         });
+        
     }
     start(hostname = '127.0.0.1', port = 3000){
         this.server.listen(port, hostname, () => {  console.log(`Server running at http://${hostname}:${port}/`); });
@@ -50,4 +54,4 @@ class App {
     
 }
 
-module.exports = { App, Router }
+module.exports = { App, Router, Database  }
