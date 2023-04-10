@@ -21,16 +21,21 @@ class Router {
 
         const method = req.method;
         const handler = this.routes[method][req.url];
-
+        const middleware = this.routes[method][req.url]['middleware']
+        if (middleware) return middleware(req,res,()=>{ handler(req,res) })
         if (handler) return handler(req, res);
 
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.end('Not Found');
     }
-    get(router, callback){ 
+    get(router, callback, middleware = false){ 
         this.routes['GET'][router] = callback
-    }
+        this.routes['GET'][router]['middleware'] = middleware
 
+    }
+    // middleware(req,res,next){
+
+    // }
     post(router, callback){
         this.routes['POST'][router] = callback
     }

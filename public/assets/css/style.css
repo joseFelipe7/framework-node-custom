@@ -1,3 +1,6 @@
+.text-color-default{
+    color: #666
+}
 .gradient-custom {
     background: #FF3F40;
     background: linear-gradient(to right, #FF3F40, #FF3F6D);
@@ -11,13 +14,11 @@
 .btn-custom {
     border: none;
     transition: 0.3s;
-    box-sizing: border-box!important;
-    
+    box-sizing: border-box!important;   
 }
 .btn-custom.gradient-custom:hover {
     background: linear-gradient(to right, #FF3F6D, #FF3F90)
 }
-
 .btn-custom.bg-secundary-custom{
     color:#FFF;
     box-sizing: border-box;
