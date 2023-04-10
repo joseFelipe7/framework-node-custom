@@ -13,6 +13,7 @@
 }
 .btn-custom {
     border: none;
+    height: 36px;
     transition: 0.3s;
     box-sizing: border-box!important;   
 }
