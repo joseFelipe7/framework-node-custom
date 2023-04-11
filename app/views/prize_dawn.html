@@ -23,6 +23,9 @@
     <div class="col-md-8">
       <h3 style="color:#FF3F6D">Sorteios disponíveis</h3>
       <div class="list-group">
+        {{if(!prizes)}} 
+              <p class="text-center">Não há sorteios disponíveis</p>
+        {{endif()}}
         {{ each(prize in prizes) }}
         <div class="list-group-item list-group-item-action " aria-current="true">
           <div class="d-flex w-100 justify-content-between">
@@ -51,6 +54,9 @@
         </div>
         <div class="card-body" style="box-sizing: border-box;">
           <div class="list-group">
+            {{if(!prizesParticipants)}} 
+              <p class="text-center">Você ainda não se inscreveu em nenhum sorteio</p>
+            {{endif()}}
             {{ each(prize in prizesParticipants) }}
             <div class="list-group-item list-group-item-action " aria-current="true">
               <div class="d-flex w-100 justify-content-between">

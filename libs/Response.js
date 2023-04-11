@@ -132,10 +132,15 @@ function ifOption(page,param,data,matches, index){
             param1 = param1.slice(1, -1)
         }else{
             param1 = data[param1]
+            
         }
         if(!param1) return page
-
-        result=(param1 && param1 != 'null')?true:false
+        
+        if(!param1.length){
+            result = false
+        }else{
+            result=(param1 && param1 != 'null')?true:false
+        }
         result = revertResult?!result:result
 
     }else if(param.length == 3){
