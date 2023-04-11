@@ -4,13 +4,7 @@ const loginController = require('../app/controllers/loginController')
 const base = '/'
 
 router.get(`${base}`, loginController.index)
-    
-    router.post(`${base}json`, (req,res)=>{ 
-      console.log(req.body)
-     return res.json(req.body)
-    })
 router.post(`${base}`, loginController.login)
-router.get(`${base}ss`, loginController.indexss)
 
 module.exports = router
 

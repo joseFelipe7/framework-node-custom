@@ -14,38 +14,43 @@ class Router {
     }
     use(req, res){
 
-        const path = url.parse(req.url).pathname;
+        try {
+            const path = url.parse(req.url).pathname;
         
-        const [,extension] = path.split('.');
-        if(extension) return this.publicFile(req, res)
+            const [,extension] = path.split('.');
+            if(extension) return this.publicFile(req, res)
 
-        const method = req.method;
-        const handler = this.routes[method][req.url];
-        const middleware = this.routes[method][req.url]['middleware']
-        if (middleware) return middleware(req,res,()=>{ handler(req,res) })
-        if (handler) return handler(req, res);
+            const method = req.method;
+            const handler = this.routes[method][req.url];
+            const middleware = this.routes[method][req.url]['middleware']
+            if (middleware && handler) return middleware(req,res,()=>{ handler(req,res) })
+            if (handler) return handler(req, res);
+        } catch (error) {
+            res.writeHead(404, { 'Content-Type': 'text/plain' });
+            res.end('Not Found');
+        }
+        
 
-        res.writeHead(404, { 'Content-Type': 'text/plain' });
-        res.end('Not Found');
+        
     }
     get(router, callback, middleware = false){ 
         this.routes['GET'][router] = callback
         this.routes['GET'][router]['middleware'] = middleware
 
     }
-    // middleware(req,res,next){
-
-    // }
-    post(router, callback){
+    post(router, callback, middleware = false){
         this.routes['POST'][router] = callback
+        this.routes['POST'][router]['middleware'] = middleware
     }
 
-    put(router, callback){
+    put(router, callback, middleware = false){
         this.routes['PUT'][router] = callback
+        this.routes['PUT'][router]['middleware'] = middleware
     }
     
-    delete(router, callback){
+    delete(router, callback, middleware = false){
         this.routes['DELETE'][router] = callback
+        this.routes['DELETE'][router]['middleware'] = middleware
     }
     publicFile(req, res){
         const filePath = path.join(this.publicFolder, req.url);

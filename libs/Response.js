@@ -29,79 +29,65 @@ function view(viewPath, viewFile, data, res, pagePrevious = null){
         if (exists) {
             try {
                 let page = pagePrevious || fs.readFileSync(path.join(viewPath,viewFile), 'utf8')
-
                 const matches = page.match(/{{.+?}}/g);
-                
+                let newVerify = false
                 if(matches){
                     matches.forEach((item, index)=>{
                         let key = item.slice(2, -2).trim()
                         let regex = /\((.*?)\)/;
                         let match = regex.exec(key);
-
                         if (match) {
                             let [callback, param] = key.slice(0, -1).split('(')
                             if(callback == 'include'){
                                 const indexStart = page.indexOf(matches[index]);
                                 page = page.substring(0, indexStart) + view(viewPath, param, data, res) + page.substring(indexStart + matches[index].length); 
                             }
-                            
+                            if(callback == 'if'){
+                                page = ifOption(page,param,data,matches, index)
+                            }
                             if(callback == 'each'){
-                                // console.log('each')
-                                // console.log(data[param])
+                                // pego os parametros da função
                                 let [alias, obj] = param.split(' in ')
                                 alias = alias.trim()
                                 obj = obj.trim()
-                                // console.log(alias)
-                                // console.log(obj)
+                                
+                                //pego a posição do inicial each
                                 const indexStart = page.indexOf(matches[index]);
 
+                                //pego a posição do encerramento each
                                 let regex = /{{\s*endeach\s*\(\s*\)\s*}}/;
                                 let match = page.substring(indexStart + matches[index].length).match(regex);
-                                // console.log(match.index)
-                                // console.log(indexStart)
-                                // console.log(page.substring(indexStart+matches[index].length, (indexStart+matches[index].length)+match.index)); 
-                                
                                 let repeatPart = ''
+                                //repito o conteudo dentro do foreach e troco pelas variaveis do item
                                 data[obj].forEach(item=>{
-                                    // console.log(item)
                                     let partpage = (page.substring(indexStart+matches[index].length, (indexStart+matches[index].length)+match.index))
                                     for (const key in item) {
-                                        
                                         partpage = partpage.replace(new RegExp(`{{\\s*${alias}\\.${key}\\s*}}`, 'g'), item[key])
                                         partpage = partpage.replace(new RegExp(`${alias}\\.${key}`, 'g'), "'"+item[key]+"'")
                                                                   
                                     }
-
                                     repeatPart += partpage
                                 })
-                                
-                                //console.log(page.indexOf(match))
-                                //console.log(match)
+
+                                //adicionando parte repetida
                                 const indexEnd = page.indexOf(match)+match[0].length
                                 page = page.substring(0, indexStart) + repeatPart + page.substring(indexEnd)
-                                page = view(viewPath, viewFile, data, res, page)
-                                //console.log(page)
-                                //match.index
-                                //console.log(indexEnd)
-                                //console.log(page.substring(indexStart , indexEnd))
-                                // const indexStart = page.indexOf(matches[index]);
-                                // page = page.substring(0, indexStart) + view(viewPath, paramPage, data, res) + page.substring(indexStart + matches[index].length); 
-
+                                newVerify = true
                             }
-                            if(callback == 'if'){
-                                page = ifOption(page,param,data,matches, index)
-                            }
-                            
                         } 
                     })
                 }
-            
-                let output = page;
+                //troco as variaveis restantes pelo valor passado pra view
                 for (const key in data) {
-                    output = output.replace(new RegExp(`{{\\s*${key}\\s*}}`, 'g'), data[key]);
+                    page = page.replace(new RegExp(`{{\\s*${key}\\s*}}`, 'g'), data[key]);
                 }
-                
-                return output
+
+                //verifico se faltou executar ou trocar algum valor dentro de {{ }}
+                const matchesRemained = page.match(/{{.+?}}/g);
+                if(matchesRemained && newVerify){
+                    page = view(viewPath, viewFile, data, res, page)
+                }
+                return page
             } catch (error) {
                 return 'ocorreu um erro ao tentar ler sua view';
             }
@@ -133,7 +119,13 @@ function ifOption(page,param,data,matches, index){
     
     if(param.length == 1){
         let [param1] = param
+        let revertResult = false
+        if(param1[0] == '!'){
+            
+            revertResult = true
+            param1 = param1.slice(1)
 
+        }
         if(Number(param1)){
             param1 = Number(param1)
         }else if((param1[0] == "'" || param1[0] == '"') && (param1[param1.length-1] == "'" || param1[param1.length-1] == '"') && (param1[0] == param1[param1.length-1])){
@@ -141,7 +133,11 @@ function ifOption(page,param,data,matches, index){
         }else{
             param1 = data[param1]
         }
-        result=param1?true:false
+        if(!param1) return page
+
+        result=(param1 && param1 != 'null')?true:false
+        result = revertResult?!result:result
+
     }else if(param.length == 3){
         let [param1, cond, param2] = param
         param1 = param1.trim()

@@ -15,7 +15,7 @@
     <span class="navbar-brand mb-0 h1">
       <img src="/assets/images/logo.png" style="width: 185px;" alt="logo">
     </span>
-    <span class="navbar-text"> Bem vindo: User </span>
+    <span class="navbar-text"> Bem vindo: {{userName}} </span>
   </div>
 </nav>
 <div class="container">
@@ -34,108 +34,47 @@
           </div>
           <div class="d-flex justify-content-between align-items-center">
             <p class="mb-1"> {{ prize.description }}</p>
-            <button class="btn btn-custom gradient-custom text-white">Participar</button>
+            <form action="/subPrize" method="post">
+              <input type="text" name="id_prize" value="{{prize.id}}" hidden>
+              <button class="btn btn-custom gradient-custom text-white">Participar</button>
+            </form>
           </div>
           <small>Sorteio ocorrera: {{ prize.date }}</small>
         </div>
         {{ endeach () }}
-        <!-- <a href="#" class="list-group-item list-group-item-action " aria-current="true">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1 text-color-default">Sorteio: Fiat Argo 0km</h5>
-                      <small>Atualizado há: 3 dias</small>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <p class="mb-1">Concorra agora a esse carro zero kilometro avalaido em 300 mil reais não perca essa chance por que chances assim não aparecem sempre então participe e tambem afinal não custa nada</p>
-                      <button class="btn btn-custom gradient-custom text-white">Participar</button>
-                    </div>
-                    <small>Sorteio ocorrera: 23/04/2023</small>
-                  </a>
-                  <a href="#" class="list-group-item list-group-item-action " aria-current="true">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1 text-color-default">Sorteio: Fiat Argo 0km</h5>
-                      <small>Atualizado há: 3 dias</small>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <p class="mb-1">Concorra agora a esse carro zero kilometro avalaido em 300 mil reais não perca essa chance por que chances assim não aparecem sempre então participe e tambem afinal não custa nada</p>
-                      <button class="btn btn-custom gradient-custom text-white">Participar</button>
-                    </div>
-                    <small>Sorteio ocorrera: 23/04/2023</small>
-                  </a>
-                  <a href="#" class="list-group-item list-group-item-action " aria-current="true">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1 text-color-default">Sorteio: Fiat Argo 0km</h5>
-                      <small>Atualizado há: 3 dias</small>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <p class="mb-1">Concorra agora a esse carro zero kilometro avalaido em 300 mil reais não perca essa chance por que chances assim não aparecem sempre então participe e tambem afinal não custa nada</p>
-                      <button class="btn btn-custom gradient-custom text-white">Participar</button>
-                    </div>
-                    <small>Sorteio ocorrera: 23/04/2023</small>
-                  </a>
-                  <a href="#" class="list-group-item list-group-item-action " aria-current="true">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1 text-color-default">Sorteio: Fiat Argo 0km</h5>
-                      <small>Atualizado há: 3 dias</small>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <p class="mb-1">Concorra agora a esse carro zero kilometro avalaido em 300 mil reais não perca essa chance por que chances assim não aparecem sempre então participe e tambem afinal não custa nada</p>
-                      <button class="btn btn-custom gradient-custom text-white">Participar</button>
-                    </div>
-                    <small>Sorteio ocorrera: 23/04/2023</small>
-                  </a> -->
       </div>
     </div>
     <div class="col-md-4">
       <div class="card">
         <div class="card-header gradient-custom">
-          <h5 class="text-white">Seus sorteios</h5>
+          <h5 class="text-white">Seus sorteios </h5>
         </div>
         <div class="card-body" style="box-sizing: border-box;">
           <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action " aria-current="true">
+            {{ each(prize in prizesParticipants) }}
+            <div class="list-group-item list-group-item-action " aria-current="true">
               <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1 text-color-default">Sorteio: Fiat Argo 0km</h5>
-                <small>Atualizado há: 3 dias</small>
+                <h5 class="mb-1 text-color-default" style="font-size: 18px;white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;">Sorteio: {{prize.prize}}</h5>
+                <small>
+                  {{ if(prize.lastUpdate,==,'hoje') }}Atualizado: Hoje {{ endif() }} 
+                  {{ if(prize.lastUpdate,!=,'hoje') }}Atualizado há: {{ prize.lastUpdate }} dias{{ endif() }}
+                </small>
+                
               </div>
               <div class="d-flex justify-content-between">
-                <!-- <p class="mb-1"></p> -->
-                <small>Ganhador: Usuario user</small>
-                <button class="btn btn-custom bg-secundary-custom text-white">Finalizado</button>
+                {{ if(prize.user_winner)}}
+                  <small>Ganhador: {{prize.user_winner}}</small>
+                  <button class="btn btn-custom bg-secundary-custom-solid text-white">Finalizado</button>      
+                {{endif()}}
+                {{ if(!prize.user_winner)}}
+                  <small>Sorteio ocorrera: {{prize.date}}</small>
+                {{endif()}}
+
               </div>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action " aria-current="true">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1 text-color-default">Sorteio: Jogo de panela</h5>
-                <small>Atualizado há: 3 dias</small>
-              </div>
-              <div class="d-flex justify-content-between">
-                <!-- <p class="mb-1"></p> -->
-                <small>Ganhador: User Usuario </small>
-                <button class="btn btn-custom bg-secundary-custom text-white">Finalizado</button>
-              </div>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action " aria-current="true">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1 text-color-default">Sorteio: PIX de 50 reais</h5>
-                <small>Atualizado há: 4 dias</small>
-              </div>
-              <div class="d-flex justify-content-between">
-                <!-- <p class="mb-1"></p> -->
-                <small>Sorteio ocorrera: 23/03/2022</small>
-                <!-- <button class="btn btn-custom bg-secundary-custom text-white">Finalizado</button> -->
-              </div>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action " aria-current="true">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1 text-color-default">Sorteio: PIX de 50 reais</h5>
-                <small>Atualizado há: 4 dias</small>
-              </div>
-              <div class="d-flex justify-content-between">
-                <!-- <p class="mb-1"></p> -->
-                <small>Sorteio ocorrera: 23/03/2022</small>
-                <!-- <button class="btn btn-custom bg-secundary-custom text-white">Finalizado</button> -->
-              </div>
-            </a>
+            </div>
+            {{ endeach () }}
           </div>
         </div>
       </div>

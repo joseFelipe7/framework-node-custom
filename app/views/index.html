@@ -1,4 +1,4 @@
-{{include(partials/header.html)}}
+{{ include(partials/header.html) }}
 <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
     <div class="col-xl-10">
@@ -12,7 +12,7 @@
                     style="width: 185px;" alt="logo">
                 </div>
 
-                <form method="post">
+                <form method="post" action="/register">
                     <p>Preencha os campos para fazer login</p>
 
                     <div class="form-outline mb-4">
@@ -33,7 +33,7 @@
 
                     <div class="d-flex align-items-center justify-content-center pb-4">
                         <p class="mb-0 me-2">Não tem uma conta?</p>
-                        <button type="button" class="btn btn-custom bg-secundary-custom">Cadastre-se</button>
+                        <a  href="/cadastro" class="btn btn-custom bg-secundary-custom">Cadastre-se</a>
                     </div>
 
                 </form>

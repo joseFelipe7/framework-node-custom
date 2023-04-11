@@ -1,12 +1,10 @@
 const { Router } = require('../libs/App')
 const router = new Router()
-const homeController = require('../app/controllers/homeController')
-const auth = require('../middlewares/Auth')
-const base = '/home'
+const registerController = require('../app/controllers/registerController')
+const base = '/cadastro'
 
-router.get(`${base}`, homeController.index, auth)
-router.post(`/subPrize`, homeController.subPrize, auth)
-
+router.get(`${base}`, registerController.index)
+router.post(`${base}`, registerController.register)
 
 module.exports = router
 

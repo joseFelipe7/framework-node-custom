@@ -11,6 +11,9 @@
 .bg-secundary-custom{
     background-color: #57DED7;
 }
+.bg-secundary-custom-solid{
+    background-color: #57DED7;
+}
 .btn-custom {
     border: none;
     height: 36px;

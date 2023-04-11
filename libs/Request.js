@@ -84,7 +84,8 @@ async function bodyAplicationFormData(req){
     const keyValuePairs = chunks.split('&');
     for (let i = 0; i < keyValuePairs.length; i++) {
         const [key, value] = keyValuePairs[i].split('=');
-        data[key] = decodeURIComponent(value);
+        
+        data[key] = decodeURIComponent(value.replace(/\+/g, ' '));
     }
 
     return data;

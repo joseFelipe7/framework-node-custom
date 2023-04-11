@@ -45,7 +45,7 @@ class Database {
             const rows = await this.#conn(sql, params);
             this.numRows = rows.length
             this.insertId = rows.insertId
-            this.data = rows.length==1?rows[0]:rows
+            this.data = rows
             return this
         } catch (err) {
             throw new Error(err.message);
