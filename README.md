@@ -15,10 +15,10 @@ O objetivo central desenvolvido no projeto foi criar um Framework reutilizável 
 Para rodar o projeto localmente em sua máquina é necessário configurar as informações dos arquivos existentes dentro da pasta config e ter em sua máquina o banco MYSQL disponibilizado dentro da raiz deste repositório `banco.slq`
 
 Para acesso do admin há um usuario com as credenciais:
-`
+``
 email:admin@admin.com
 senha:123
-`
+```
 Comandos: 
 ```
 npm install(primeira vez que for rodar o projeto)
