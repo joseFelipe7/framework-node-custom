@@ -13,7 +13,7 @@ module.exports = {
             if(!user) return res.json({message:'usuario nao encontrado'})
 
             if(!Hashing.compare(password, user.password)) return res.json({message:'senha incorreta'})
-            console.log(user)    
+
             req.session.userManager = user
             return res.redirect('/manager/sorteios')
         } catch (error) {  

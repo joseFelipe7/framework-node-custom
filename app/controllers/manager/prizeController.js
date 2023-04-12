@@ -11,7 +11,7 @@ module.exports = {
        
         if(result.numRows > 1){
             let idUserwinner = result.data[0].id_user
-            console.log(idUserwinner)
+            
             await Database.query(`UPDATE prize_dawn SET id_winner = ? WHERE id = ?`,[idUserwinner,id])
         }
         
@@ -39,7 +39,7 @@ module.exports = {
     edit:async (req,res)=>{
         let idPrize = req.query.id
         let prize = await Prize.getById(idPrize)
-        console.log(prize)
+        
         if(!prize) return res.redirect('/manager/sorteios')
         const  data = {
             p_title:prize.title,
