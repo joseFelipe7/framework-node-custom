@@ -14,6 +14,11 @@ O objetivo central desenvolvido no projeto foi criar um Framework reutilizável 
 ## Instalação do projeto local
 Para rodar o projeto localmente em sua máquina é necessário configurar as informações dos arquivos existentes dentro da pasta config e ter em sua máquina o banco MYSQL disponibilizado dentro da raiz deste repositório `banco.slq`
 
+Comandos: 
+```
+npm install(primeira vez que for rodar o projeto)
+node index,js ou npx nodemon index.js(para caso de desenvolvimento)
+```
 Rota cliente: `/`
 Rota admin: `/manager`
 
@@ -160,6 +165,16 @@ router.get('/', (req, res) => {
     req.body.name
 })
 
+```
+---
+##### session
+e possivel guarda dados na sessão do usuario atribuindo a `req.session` e resgatar esses dados em qualquer momento dentro da aplicação
+O acesso será
+```js
+const { Router } = require('../libs/App')
+router.get('/', (req, res) => {
+    req.session.dadoGuardado
+})
 ```
 ---
 
