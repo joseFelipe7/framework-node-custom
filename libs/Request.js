@@ -27,8 +27,7 @@ async function bodyJson(req){
             resolve();
         });
     });
-    
-    return JSON.parse(data)
+    return data.length>0?JSON.parse(data):{}
 }
 async function bodyFormData(req){
     let data = {};

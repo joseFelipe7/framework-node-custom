@@ -1,0 +1,142 @@
+body {
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.icon-edit {
+    color: #FF3F40
+}
+
+.icon-del {
+    color: #f30036
+}
+
+.btn-edit {
+    border: solid 1px #FF3F40;
+    transition: 0.3s;
+    color: #FF3F40
+}
+
+.btn-edit:hover {
+    color: #FFF;
+    background: #FF3F40
+}
+
+.btn-del {
+    border: solid 1px #f30036;
+    transition: 0.3s;
+    color: #f30036
+}
+
+.btn-del:hover {
+    color: #FFF;
+    background: #f30036
+}
+
+.container-sidebar {
+    width: 100%;
+    height: 100%;
+    min-height: 80vh;
+}
+
+.option-sidebar {
+    padding: 12px;
+    transition: 0.3s;
+    cursor: pointer;
+    color: #666;
+
+}
+
+.option-sidebar:hover {
+    background: #FF3F40;
+    color: #fff;
+
+}
+
+.option-sidebar.active {
+    background: #FF3F40;
+    color: #fff;
+
+}
+
+.option-sidebar span {
+    margin-left: 20px;
+}
+.bg-container{
+    background: #EFFFFF;
+
+}
+.nav-container-header {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    align-items: center;
+}
+
+.text-color-default {
+    color: #666
+}
+
+.text-highlighted {
+    font-weight: 700;
+    color: #57DED7;
+}
+
+.btn-default-custom {
+    background: #57DED7;
+    color: #FFF;
+    transition: 0.3s;
+}
+
+.btn-default-custom:hover {
+    background: #FF3F40;
+    color: #FFF;
+
+}
+.btn-pagination {
+    border: #57DED7 solid 1px;
+    background: #FFF;
+    color: #57DED7;
+    transition: 0.3s;
+}
+.btn-pagination.active {
+    background: #57DED7;
+    border-color: #57DED7;
+    color: #FFF;
+    transition: 0.3s;
+}
+
+.btn-pagination:hover {
+    background: #FF3F40;
+    border-color: #FF3F40;
+    color: #FFF;
+
+}
+
+.line-dividing {
+    border-bottom: 1px solid #FF3F40;
+    width: 100%
+}
+
+.table-header-custom tr {
+    background: #57DED7;
+    color: #fff;
+}
+
+.card-custom {
+    border: none;
+    box-shadow: 1.5px 2px 10px;
+}
+
+.title-card-custom {
+    font-size: 26px;
+    font-weight: 600;
+    color: #333;
+}

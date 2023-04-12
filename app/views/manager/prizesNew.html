@@ -1,0 +1,56 @@
+{{include(/partials/headerManager.html)}}
+
+    <div class="mt-4">
+        <div class="card  card-custom">
+            <div class="card-body">
+                <h5 class="card-title text-center">Novo sorteio</h5>
+                <form action="/manager/sorteios" method="post" id="form-collaborator">
+                    <div class="row mt-5">
+                        <div class="col-md-612">
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="title">Título</label>
+                                <input required name="title" type="text" id="title" class="form-control"
+                                    placeholder="Título da premiação" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="prize">Prêmio</label>
+                                <input required name="prize" type="text" id="prize" class="form-control" placeholder="premio" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="date">Data do sorteio</label>
+                                <input required name="date" type="date" id="date" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="hour">Hora do sorteio</label>
+                                <input required name="hour" type="time" id="hour" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="description">Descrição</label>
+                                <textarea required name="description" type="text" id="description" class="form-control" placeholder="..." id="" cols="30" rows="10"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                   <div>
+                      <button  type="submit" class="btn btn-primary">Cadastrar</button>
+                      <button id="btn-login" type="button" class="btn btn-secondary">Voltar</button>
+       
+                   </div>
+                </form>
+             </div>
+        </div>
+    </div>
+    <script src="/assets/js/prizes/list.js"></script>
+
+{{include(/partials/footerManager.html)}}

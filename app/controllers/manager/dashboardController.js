@@ -2,6 +2,6 @@
 // const User = require('../models/User')
 module.exports = {
     index:(req,res)=>{
-        res.view('dashboard.html', {title:'Login', uiiiii: 'ele gosta'})
+        res.view('dashboard.html', {title:'Sorteios'})
     }
 }

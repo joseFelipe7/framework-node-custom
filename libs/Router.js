@@ -19,7 +19,6 @@ class Router {
             
             const [,extension] = path.split('.');
             if(extension) return this.publicFile(req, res)
-
             const method = req.method;
             const handler = this.routes[method][path];
             const middleware = this.routes[method][path]['middleware']

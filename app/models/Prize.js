@@ -44,14 +44,29 @@ class Prize{
     static async countList(filter,sort){
         let result = await Database.query(`SELECT 
                                             * FROM prize_dawn 
-                                        WHERE ${filter} ${sort}`)
+                                        WHERE
+                                        ${filter} AND status_active = 1
+                                        ${sort}`)
             return result.numRows
+    }
+    static async getById(id){
+        let result = await Database.query(`SELECT 
+                                                *,
+                                                DATE_FORMAT(date, '%Y-%m-%d') date
+                                            FROM prize_dawn 
+                                            WHERE id = ?`,[id])
+        
+        return result.numRows?result.data[0]:false
     }
     static async list(filter, sort, startPosition, perPage){
         let result = await Database.query(`SELECT 
-                                            * FROM prize_dawn 
-                                        WHERE ${filter} ${sort}
-                                        LIMIT ${startPosition}, ${perPage}`)
+                                                pd.*,
+                                                concat(u.first_name,' ',u.last_name) nameUser,
+                                                DATE_FORMAT(pd.date, '%d/%m/%Y') date
+                                            FROM prize_dawn pd
+                                            LEFT JOIN users u ON pd.id_winner = u.id
+                                            WHERE ${filter} AND status_active = 1 ${sort}
+                                            LIMIT ${startPosition}, ${perPage}`)
         result = result.data
         return result
     }

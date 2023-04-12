@@ -4,12 +4,20 @@ const dashboardController = require('../app/controllers/manager/dashboardControl
 const prizeController = require('../app/controllers/manager/prizeController')
 const prizeApiController = require('../app/controllers/manager/api/prizeController')
 const base = '/manager'
+
+//rota dash
 router.get(`${base}`, dashboardController.index)
 
-router.get(`${base}/premios`, prizeController.index)
-router.post(`${base}/premios`, prizeController.insert)
-router.put(`${base}/premios`, prizeController.update)
-router.delete(`${base}/premios`, prizeController.delete)
+/*rotas de sorteio*/
+router.get(`${base}/sorteios`, prizeController.index)
+
+router.get(`${base}/sorteios/novo`, prizeController.new)
+router.post(`${base}/sorteios`, prizeController.insert)
+
+router.get(`${base}/sorteios/editar`, prizeController.edit)
+router.post(`${base}/sorteios/editar`, prizeController.update)
+
+router.get(`${base}/sorteios/delete`, prizeController.delete)
 
 
 const baseApi = '/api/manager'
