@@ -14,7 +14,6 @@ class App {
         this.sessions = {};
         this.server = http.createServer(async (req, res) => {
           await this.#startSession(req,res)
-          
           req = await request(req)
           res = await response(res, this.viewPath)
           

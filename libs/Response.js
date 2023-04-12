@@ -6,7 +6,7 @@ async function index (res, viewPath){
         return res
     }
     res.json = (obj)=>{
-
+        
         json(obj, res)
         return res
     }
