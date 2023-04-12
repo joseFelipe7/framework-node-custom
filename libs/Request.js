@@ -1,7 +1,12 @@
-
+const url = require('url')
 async function index (req){
     req.body = await getBody(req)
+    req.query = getQuery(req)
     return req
+}
+function getQuery(req){
+    const queryObject = url.parse(req.url, true).query;
+    return Object.assign({}, queryObject);
 }
 async function getBody(req){
     if(!req.headers['content-type']) return {}

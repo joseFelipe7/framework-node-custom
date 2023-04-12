@@ -22,14 +22,5 @@ module.exports = {
             console.log(error)
         }
         
-    },
-    
-    indexss:(req,res)=>{
-        req.session.ussi = 'ta maluco'
-
-        console.log(req.session)
-        return res.json(req.session)
-
-        res.view('index.html', {title:'olhe para o meu titulo', uiiiii: 'ele gosta'})
     }
 }

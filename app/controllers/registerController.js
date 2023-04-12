@@ -2,7 +2,6 @@ const { Hashing } = require('../../libs/App')
 const User = require('../models/User')
 module.exports = {
     index:(req,res)=>{
-        console.log(req.uiiiiiiiiiiiiiiiiiiiii)
         res.view('register.html', {title:'Login', uiiiii: 'ele gosta'})
     },
     register:async (req,res)=>{

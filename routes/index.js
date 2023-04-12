@@ -1,20 +1,24 @@
-const { Router } = require('../libs/App')
-const router = new Router()
-const testController = require('../app/controllers/exampleController')
+// const { Router } = require('../libs/App')
+// const router = new Router()
+// const middleware = (req,res,next)=>{
+//     /*--*/
+//     next()
+// }
+// router.get('/', (req, res) => { /*...*/ }, middleware)
+// module.exports = router
 
 
+// const { Router } = require('../libs/App')
+// const router = new Router()
+// router.get('/', (req, res) => { 
+//     res.redirect('/home')
+// // })
+// // module.exports = router
 
-// router.get('/', testController.index)
-// router.post('/', (req, res) => {
-  
-//   res.writeHead(200, { 'Content-Type': 'text/plain' });
-//   res.end('Hello World!');
+// const { Hashing } = require('./libs/App')
 
-// })
-module.exports = router
-
-
-
+// let textHash = 'be2b650ac4eb26e0e4b41f357dc1def9e7f5c063d6072bbb06f3ca94538f0946'
+// Hashing.compare('123',textHash) //saida: true
 
 
 

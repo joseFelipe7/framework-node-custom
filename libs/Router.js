@@ -16,13 +16,13 @@ class Router {
 
         try {
             const path = url.parse(req.url).pathname;
-        
+            
             const [,extension] = path.split('.');
             if(extension) return this.publicFile(req, res)
 
             const method = req.method;
-            const handler = this.routes[method][req.url];
-            const middleware = this.routes[method][req.url]['middleware']
+            const handler = this.routes[method][path];
+            const middleware = this.routes[method][path]['middleware']
             if (middleware && handler) return middleware(req,res,()=>{ handler(req,res) })
             if (handler) return handler(req, res);
         } catch (error) {

@@ -8,15 +8,16 @@ const routes = require('./routes')
 const routesLogin = require('./routes/login')
 const routesRegister = require('./routes/register')
 const routesHome = require('./routes/home')
+const routesManager = require('./routes/manager')
 
 app = new App()
 
 app.viewFolder(path.join('app', 'views'))
 app.publicFolder(path.join('public')) 
 //routes
-// app.useRoute(routes) 
 app.useRoute(routesLogin)  
 app.useRoute(routesRegister)  
 app.useRoute(routesHome) 
+app.useRoute(routesManager) 
 
 app.start(host, port)

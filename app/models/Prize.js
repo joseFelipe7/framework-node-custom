@@ -41,17 +41,44 @@ class Prize{
         let result = await Database.query(`INSERT INTO prize_dawn_participants SET id_prize = ?, id_user = ?`,[idPrize, idUser])
         return result.insertId?true:false
     }
-    
+    static async countList(filter,sort){
+        let result = await Database.query(`SELECT 
+                                            * FROM prize_dawn 
+                                        WHERE ${filter} ${sort}`)
+            return result.numRows
+    }
+    static async list(filter, sort, startPosition, perPage){
+        let result = await Database.query(`SELECT 
+                                            * FROM prize_dawn 
+                                        WHERE ${filter} ${sort}
+                                        LIMIT ${startPosition}, ${perPage}`)
+        result = result.data
+        return result
+    }
     static async insert(data){
         let dataInsert = [
-            data.fisrtName,
-            data.lastName,
-            data.email,
-            data.phone,
-            data.password
+            data.title,
+            data.prize,
+            data.date,
+            data.hour,
+            data.description
         ]
-        return await Database.query("INSERT INTO users SET first_name = ?, last_name =?, email = ?, phone = ?, password = ?", dataInsert)
+        return await Database.query("INSERT INTO prize_dawn SET title = ?, prize = ?, date = ?, hour = ?, description = ?", dataInsert)
+    }
+    static async update(id, data){
+        let dataUpdate = [
+            data.title,
+            data.prize,
+            data.date,
+            data.hour,
+            data.description,
+            id
+        ]
         
+        return await Database.query("UPDATE prize_dawn SET title = ?, prize = ?, date = ?, hour = ?, description = ? WHERE id = ?", dataUpdate)
+    }
+    static async delete(id){
+        return await Database.query("UPDATE prize_dawn SET status_active = 0 WHERE id = ?", [id])
     }
 }
 module.exports = Prize
