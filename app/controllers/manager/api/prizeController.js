@@ -21,6 +21,7 @@ module.exports = {
             
             return res.status(200).json({meta, data:result})
         } catch (error) {
+            console.log(error.message)
             return res.status(500).json({message:'ocorreu um erro inesperado'})
         }
         

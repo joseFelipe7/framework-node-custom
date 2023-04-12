@@ -1,7 +1,21 @@
 const Prize = require('../../models/Prize')
+const { Database } = require('../../../libs/App')
+
 module.exports = {
     index:(req,res)=>{
         return res.view('/manager/prizes.html', {title:'Sorteios'})
+    },
+    drawWinner:async (req,res)=>{
+        let id = req.query.id
+        let result = await Database.query(`SELECT * FROM prize_dawn_participants WHERE id_prize = ? order BY RAND() LIMIT 2`,[id])
+       
+        if(result.numRows > 1){
+            let idUserwinner = result.data[0].id_user
+            console.log(idUserwinner)
+            await Database.query(`UPDATE prize_dawn SET id_winner = ? WHERE id = ?`,[idUserwinner,id])
+        }
+        
+        return res.redirect('/manager/sorteios')
     },
     new:(req,res)=>{
         

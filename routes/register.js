@@ -4,7 +4,7 @@ const registerController = require('../app/controllers/registerController')
 const base = '/cadastro'
 
 router.get(`${base}`, registerController.index)
-router.post(`${base}`, registerController.register)
+router.post(`/register`, registerController.register)
 
 module.exports = router
 

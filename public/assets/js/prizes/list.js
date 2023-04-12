@@ -43,7 +43,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td class="text-center">${item.prize}</td>
                 <td class="text-center">${item.date}</td>
                 <td class="text-center">${item.id_winner?'Encerrado':'Aberto'}</td>
-                <td class="text-center">${item.id_winner?item.nameUser:''}</td>
+                <td class="text-center">${item.total_participants}</td>
+                <td class="text-center">${item.id_winner?item.nameUser:item.total_participants<=1?'Sem participantes suficientes':'<a href="/manager/sorteios/draw-winner?id='+item.id+'"> <button class="btn btn-default-custom">Sortear vencedor</button></a>'}</td>
                 <td class="table-action">
                    <a href="sorteios/editar?id=${item.id}" class="action-icon"> <i class="fa-sharp fa-solid fa-pen-to-square icon-edit"></i></a>
                    <a href="sorteios/delete?id=${item.id}" class="action-icon"> <i class="fa-sharp fa-solid fa-trash icon-del"></i></a>

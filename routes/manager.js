@@ -15,7 +15,9 @@ router.post(`${base}/login`, dashboardController.login)
 router.get(`${base}`, dashboardController.dashboard, authManager)
 
 /*rotas de sorteio*/
+
 router.get(`${base}/sorteios`, prizeController.index, authManager)
+router.get(`${base}/sorteios/draw-winner`, prizeController.drawWinner)
 
 router.get(`${base}/sorteios/novo`, prizeController.new, authManager)
 router.post(`${base}/sorteios`, prizeController.insert, authManager)

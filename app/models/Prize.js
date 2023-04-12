@@ -62,11 +62,15 @@ class Prize{
         let result = await Database.query(`SELECT 
                                                 pd.*,
                                                 concat(u.first_name,' ',u.last_name) nameUser,
-                                                DATE_FORMAT(pd.date, '%d/%m/%Y') date
+                                                DATE_FORMAT(pd.date, '%d/%m/%Y') date,
+                                                count(pdp.id) as total_participants
                                             FROM prize_dawn pd
+                                            LEFT JOIN prize_dawn_participants pdp ON pdp.id_prize = pd.id
                                             LEFT JOIN users u ON pd.id_winner = u.id
                                             WHERE ${filter} AND status_active = 1 ${sort}
-                                            LIMIT ${startPosition}, ${perPage}`)
+                                            GROUP BY pd.id
+                                            LIMIT ${startPosition}, ${perPage}
+                                            `)
         result = result.data
         return result
     }
