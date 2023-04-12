@@ -14,6 +14,9 @@ O objetivo central desenvolvido no projeto foi criar um Framework reutilizável 
 ## Instalação do projeto local
 Para rodar o projeto localmente em sua máquina é necessário configurar as informações dos arquivos existentes dentro da pasta config e ter em sua máquina o banco MYSQL disponibilizado dentro da raiz deste repositório `banco.slq`
 
+Rota cliente: `/`
+Rota admin: `/manager`
+
 Sobre o Framework criado com ferramentas nativas
 # | Framework  Node&View |
 
