@@ -9,7 +9,7 @@ class Prize{
                                                 ELSE DATEDIFF(CURDATE(),pd.updatedAt)
                                                 END AS 'lastUpdate' 
                                             FROM prize_dawn pd
-                                            WHERE date >= curdate() AND id_winner is NULL 
+                                            WHERE date >= curdate() AND id_winner is NULL AND status_active = 1
                                             AND NOT EXISTS (SELECT 1
                                                             FROM prize_dawn_participants pdp
                                                             WHERE pd.id = pdp.id_prize
